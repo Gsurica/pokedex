@@ -1,8 +1,6 @@
 import React from 'react';
 import pokeball from "../../pokeball.png";
 import { Link } from "react-router-dom";
-import { useDispatch } from 'react-redux';
-import { fetchPokemonsDetails } from '../../features/Pokemon/pokemonSlice';
 
 export const PokemonCard = ({ name, pokemonId }) => {
   return (

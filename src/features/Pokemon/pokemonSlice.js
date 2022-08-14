@@ -11,12 +11,13 @@ const initialState = {
   movesModal: false,
   moves: [],
   pages: "",
+  pokemonSearched: [],
 }
 
 export const fetchPokemons = createAsyncThunk(
   "pokemon/fetchPokemons",
-  async () => {
-    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/`);
+  async (term = "") => {
+    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${term}`);
     return response.data;
   },
 );
@@ -77,6 +78,14 @@ export const fetchPokemonMoves = createAsyncThunk(
   },
 );
 
+export const fetchSearchedPokemons = createAsyncThunk(
+  "pokemon/fetchSearchedPokemons",
+  async (term) => {
+    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${term}`);
+    return response.data;
+  },
+);
+
 const pokemonSlice = createSlice({
   name: "pokemon",
   initialState,
@@ -118,6 +127,9 @@ const pokemonSlice = createSlice({
     });
     builder.addCase(fetchPokemonPages.fulfilled, (state, { payload }) => {
       state.pages = payload;
+    });
+    builder.addCase(fetchSearchedPokemons.fulfilled, (state, { payload }) => {
+      state.pokemonSearched = payload;
     });
   }
 });
