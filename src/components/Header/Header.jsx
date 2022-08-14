@@ -1,7 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPokemons } from '../../features/Pokemon/pokemonSlice';
 
 export const Header = () => {
+
+  const [term, setTerm] = useState("");
+  const dispatch = useDispatch();
+  const pokemons = useSelector(state => state.pokemon.pokemons);
+
+  const submithandler = e => {
+    e.preventDefault();
+    dispatch(fetchPokemons(term));
+    setTerm("");
+    console.log(pokemons);
+  }
+
   return (
     <div className="flex items-center flex-col">
       <div className="w-full grid grid-cols-3 gap-4 bg-zinc-200 py-6">
@@ -19,8 +33,10 @@ export const Header = () => {
         </div>
       </div>
       <div className="px-4 py-8 bg-black rounded-bl-lg rounded-br-lg">
-        <input className="p-2 px-3" placeholder="Search Pokemon!" />
-        <button className="text-white text-center px-4 bg-red-500 p-2 rounded-tr-lg rounded-br-lg uppercase tracking-wider">Search</button>
+        <form onSubmit={submithandler}>
+          <input className="p-2 px-3" value={term} onChange={e => setTerm(e.target.value)} placeholder="Search Pokemon!" />
+          <button className="text-white text-center px-4 bg-red-500 p-2 rounded-tr-lg rounded-br-lg uppercase tracking-wider">Search</button>
+        </form>
       </div>
     </div>
   )

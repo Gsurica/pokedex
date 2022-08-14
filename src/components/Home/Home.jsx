@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { PokemonListing } from "../PokemonListing/PokemonListing";
-import { fetchPokemons, fetchPokemonPages } from '../../features/Pokemon/pokemonSlice';
+import { fetchPokemons } from '../../features/Pokemon/pokemonSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
 export const Home = () => {
